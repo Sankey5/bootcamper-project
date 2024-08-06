@@ -1,6 +1,6 @@
 package com.organization.mvcproject.controller;
-import com.organization.mvcproject.model.Game;
-import com.organization.mvcproject.model.Review;
+import com.organization.mvcproject.model.GameImpl;
+import com.organization.mvcproject.model.ReviewImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,21 +19,21 @@ public class HomeController {
     @RequestMapping(value = "/review", method = RequestMethod.GET)
     public ModelAndView review() {
 
-        return new ModelAndView("reviewCreatePage", "command", new Review());
+        return new ModelAndView("reviewCreatePage", "command", new ReviewImpl());
     }
 
     @RequestMapping(value = "/addReview", method = RequestMethod.POST)
-    public ModelAndView addReview(Review review, ModelMap model) {
-        if(review.getAuthor().equals("")) {
+    public ModelAndView addReview(ReviewImpl review, ModelMap model) {
+        if(review.getAuthor().isEmpty()) {
             review.setAuthor("anonymous");
         }
 
         return new ModelAndView("reviewDetailPage", "submittedReview", review);
     }
 
-    @RequestMapping(value = "/games", method = RequestMethod.GET)
+    @RequestMapping(value = "/gamesLibrary", method = RequestMethod.GET)
     public ModelAndView game() {
-        return new ModelAndView("gamesPage", "command", new Game());
+        return new ModelAndView("gamesPage", "command", new GameImpl());
     }
 
 	@RequestMapping(value="/hello")

@@ -3,6 +3,6 @@
 	<a class="navbar-brand" href="/"> <img
 		src="resources/static/images/MGLlogo.png" width="90" height="60"
 		alt="">
-	</a> <a class="nav-item nav-link" href="games">Games</a> <a
+	</a> <a class="nav-item nav-link" href="gamesLibrary">Games</a> <a
 		class="nav-item nav-link" href="review">Review</a>
 </nav>

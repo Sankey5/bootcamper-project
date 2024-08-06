@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EntityScan("com.organization.provider.model")
-@EnableJpaRepositories(basePackages = "com.organization.provider.repository") 
+@EnableJpaRepositories(basePackages = "com.organization.provider.dao")
 public class SpringPersistenceConfig {
 	
 	//Spring Boot creates a TransactionPlatformManager

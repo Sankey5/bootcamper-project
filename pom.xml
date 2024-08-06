@@ -14,18 +14,18 @@
 		<spring.boot.version>2.6.0</spring.boot.version>
 	</properties>
 <!--	<repositories>
-		<repository>
+		<dao>
 			<id>github</id>
 			<name>GitHub Mbd06b Apache Maven Packages</name>
 			<url>https://maven.pkg.github.com/Mbd06b/bootcamper-project</url>
-		</repository>
+		</dao>
 	</repositories>
 	<distributionManagement>
-		<repository>
+		<dao>
 			<id>github</id>
 			<name>Releases</name>
 			<url>https://maven.pkg.github.com/Mbd06b/bootcamper-project</url>
-		</repository>
+		</dao>
 		<snapshotRepository>
 			<id>github</id>
 			<name>Snapshot</name>
