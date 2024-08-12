@@ -38,7 +38,6 @@ angular.module('MGL_Task1_app').controller('MGL_Task1_Controller',
 			}
 
 			self.updateGame = (event, updatedGame) => {
-			    console.log(updatedGame)
 			    return MGL_Task1_Service.updateGame(updatedGame).then( function() {
 			        self.updateForm(event);
 			        self.fetchAllGames();

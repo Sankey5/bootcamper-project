@@ -28,7 +28,6 @@ angular.module('MGL_Task1_app').factory('MGL_Task1_Service', ['$http', function(
 		}
 
 		function updateGame(newGame) {
-		    console.log(newGame);
 			return $http.put(REST_SERVICE_URI, newGame).then(function(response) {
 					return response.data;
 				}
