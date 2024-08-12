@@ -90,7 +90,7 @@
                                     <input ng-if="!updatedElement" type="text" placeholder="{{currentGame.genre}}" ng-model="currentGame.genre"></input>
                                 </td>
                                 <td>
-                                    <button ng-if="updatedElement" class="btn btn-info" type="button" ng-click="ctrl.updateForm($event)">Update</button>
+                                    <button ng-if="updatedElement" class="btn btn-info" type="button" ng-click="ctrl.toggleInlineUpdateForm($event); ctrl.setGameBeforeUpdate(currentGame)">Update</button>
                                     <button ng-if="!updatedElement" class="btn btn-warning" type="button" ng-click="ctrl.updateGame($event, currentGame)">Update</button>
                                 </td>
                                 <td><button class="btn btn-danger" type="button" ng-click="ctrl.deleteGame(currentGame.id)">Delete</button></td>

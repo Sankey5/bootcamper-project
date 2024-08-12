@@ -9,6 +9,7 @@ angular.module('MGL_Task1_app').controller('MGL_Task1_Controller',
 				genre : ''
 			};
 			self.games = [];
+			self.preUpdatedGame = {};
 
 			self.fetchAllGames = function(){
 				MGL_Task1_Service.fetchAllGames().then(function(data) {
@@ -23,7 +24,7 @@ angular.module('MGL_Task1_app').controller('MGL_Task1_Controller',
 				});
 			}
 
-            // Helper function
+            // Helper update function
             self.clearGamesForm = function() {
                 document.querySelectorAll("#add-game-form input").forEach( e => {
                     if(e.type === "text") {
@@ -32,14 +33,24 @@ angular.module('MGL_Task1_app').controller('MGL_Task1_Controller',
                 });
             }
 
-			self.updateForm = function(event) {
+			self.toggleInlineUpdateForm = function(event) {
 			    let parentElementScope = angular.element(event.target.parentElement.parentElement).scope();
 			    parentElementScope.updatedElement = !parentElementScope.updatedElement;
 			}
 
+			self.setGameBeforeUpdate = function(currentGame) {
+			    self.preUpdatedGame["name"] = currentGame.name;
+			    self.preUpdatedGame["genre"] = currentGame.genre;
+			}
+
 			self.updateGame = (event, updatedGame) => {
+			    if(self.preUpdatedGame["name"] === updatedGame["name"]
+			    && self.preUpdatedGame["genre"] === updatedGame["name"]) {
+			        return;
+			    }
+
 			    return MGL_Task1_Service.updateGame(updatedGame).then( function() {
-			        self.updateForm(event);
+			        self.toggleInlineUpdateForm(event);
 			        self.fetchAllGames();
 			    })
 			}
