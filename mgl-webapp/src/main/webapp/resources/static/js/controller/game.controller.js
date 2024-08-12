@@ -18,15 +18,17 @@ angular.module('MGL_Task1_app').controller('MGL_Task1_Controller',
 
 			self.addGame = function(){
 				return MGL_Task1_Service.createGame(self.game).then( function() {
+				self.clearGamesForm();
 				self.fetchAllGames();
 				});
 			}
 
             // Helper function
+            self.clearGamesForm = function() {
+                document.querySelectorAll("#add-game-form input").forEach( e => e.value = null);
+            }
+
 			self.updateForm = function(event) {
-			    //console.log(event);
-			    //console.log(event.target.parentElement.parentElement);
-			    //console.log(angular.element(event.target.parentElement.parentElement).scope())
 			    let parentElementScope = angular.element(event.target.parentElement.parentElement).scope();
 			    parentElementScope.updatedElement = !parentElementScope.updatedElement;
 			}
