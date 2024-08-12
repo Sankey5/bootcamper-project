@@ -3,10 +3,13 @@ import com.organization.mvcproject.model.GameImpl;
 import com.organization.mvcproject.model.ReviewImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.ServletContext;
+import java.io.*;
 
 @Controller
 public class HomeController {
@@ -22,7 +25,7 @@ public class HomeController {
         return new ModelAndView("reviewCreatePage", "command", new ReviewImpl());
     }
 
-    @RequestMapping(value = "/addReview", method = RequestMethod.POST)
+    @PostMapping(value = "/addReview")
     public ModelAndView addReview(ReviewImpl review, ModelMap model) {
         if(review.getAuthor().isEmpty()) {
             review.setAuthor("anonymous");
@@ -31,34 +34,13 @@ public class HomeController {
         return new ModelAndView("reviewDetailPage", "submittedReview", review);
     }
 
-    @RequestMapping(value = "/gamesLibrary", method = RequestMethod.GET)
+    @GetMapping(value = "/gamesLibrary")
     public ModelAndView game() {
         return new ModelAndView("gamesPage", "command", new GameImpl());
     }
 
-	@RequestMapping(value="/hello")
-    public ModelAndView hello(@RequestParam(required=false, defaultValue="World") String name) {
-        ModelAndView ret = new ModelAndView("home");
-        // Adds an object to be used in home.jsp
-        ret.addObject("name", testingMethod());
-        
-        //logs to console 
-        practiceLoop();
-        
-        return ret;
-    }
-
-	
-	private String testingMethod() {
-        return "testing Method";
-    }
-    private String practiceLoop() {
-        String testString = "";
-        for(int i=0; i<=10; i++) {
-            System.out.println("i: "+i);
-            testString += i;
-            System.out.println("testString: " + testString);
-        }
-        return testString;
+	@GetMapping(value="/hello")
+    public ModelAndView hello(@RequestParam(defaultValue="World") String name) {
+        return new ModelAndView("home");
     }
 }

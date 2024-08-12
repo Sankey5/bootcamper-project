@@ -5,6 +5,7 @@ import java.util.List;
 import com.organization.mvcproject.api.dao.GameDAO;
 import com.organization.mvcproject.api.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.organization.mvcproject.api.model.Game;
@@ -13,6 +14,7 @@ import com.organization.mvcproject.api.model.Game;
 public class GameServiceImpl implements GameService {
 
 	@Autowired
+	@Qualifier("gameLoopBasedDAO")
 	private GameDAO games;
 
 	@Override
@@ -24,14 +26,10 @@ public class GameServiceImpl implements GameService {
 	}
 
 	@Override
-	public Game addOrUpdateGame(Game newGame) {
-		return games.addOrUpdateGame(newGame);
-	}
+	public Game updateGame(Game newGame) { return games.updateGame(newGame); }
 
 	@Override
-	public Game deleteGame(Game game) {
-		return games.deleteGame(game);
-	}
+	public boolean deleteGame(int gameId) { return games.deleteGame(gameId); }
 
 
 }

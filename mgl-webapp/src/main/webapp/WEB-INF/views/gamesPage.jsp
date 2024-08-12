@@ -29,17 +29,17 @@
     <body ng-app="MGL_Task1_app" class="ng-cloak">
         <mgl:myNav/>
         <br>
-        <div class="container" ng-controller="MGL_Task1_Controller as MGL_T1_ctrl">
+        <div class="container" ng-controller="MGL_Task1_Controller as ctrl">
             <div class="panel panel-default">
                 <div class="panel-heading text-light"><span class="lead">Game Registration Form </span></div>
                 <div class="formcontainer">
-                    <form ng-submit="MGL_T1_ctrl.addGame()" name="gameForm" class="form-horizontal">
-                        <input type="hidden" ng-model="MGL_T1_ctrl.game.id" />
+                    <form ng-submit="ctrl.addGame()" name="gameForm" class="form-horizontal">
+                        <input type="hidden" ng-model="ctrl.game.id" />
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <label class="col-md-2 control-lable text-light" for="name">Name*</label>
                                 <div class="col-md-7">
-                                    <input type="text" ng-model="MGL_T1_ctrl.game.name" id="name" class="name form-control input-sm" placeholder="Enter the name of the new game [required]" required ng-minlength="3" />
+                                    <input type="text" ng-model="ctrl.game.name" id="name" class="name form-control input-sm" placeholder="Enter the name of the new game [required]" required ng-minlength="3" />
                                     <div class="has-error" ng-show="gameForm.$dirty">
                                         <span ng-show="gameForm.name.$error.required">This is a required field</span>
                                         <span ng-show="gameForm.name.$error.minlength">Minimum length required is 3</span>
@@ -54,7 +54,7 @@
                             <div class="form-group col-md-12">
                                 <label class="col-md-2 control-lable text-light" for="genre">Game Genre</label>
                                 <div class="col-md-7">
-                                    <input type="text" ng-model="MGL_T1_ctrl.game.genre" id="genre" class="form-control input-sm" placeholder="Enter the genre of the new game" />
+                                    <input type="text" ng-model="ctrl.game.genre" id="genre" class="form-control input-sm" placeholder="Enter the genre of the new game" />
                                 </div>
                             </div>
                         </div>
@@ -80,11 +80,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="currentGame in MGL_T1_ctrl.games">
-                                <td><span ng-bind="currentGame.name"></span></td>
-                                <td><span ng-bind="currentGame.genre"></span></td>
+                            <tr ng-repeat="currentGame in ctrl.games" ng-init="updatedElement=true">
                                 <td>
+                                    <span ng-if="updatedElement" ng-bind="currentGame.name"></span>
+                                    <span><input ng-if="!updatedElement" type="text" placeholder="{{currentGame.name}}" ng-model="currentGame.name"></input></span>
                                 </td>
+                                <td>
+                                    <span ng-if="updatedElement" ng-bind="currentGame.genre"></span>
+                                    <input ng-if="!updatedElement" type="text" placeholder="{{currentGame.genre}}" ng-model="currentGame.genre"></input>
+                                </td>
+                                <td>
+                                    <button ng-if="updatedElement" class="btn btn-info" type="button" ng-click="ctrl.updateForm($event)">Update</button>
+                                    <button ng-if="!updatedElement" class="btn btn-warning" type="button" ng-click="ctrl.updateGame($event, currentGame)">Update</button>
+                                </td>
+                                <td><button class="btn btn-danger" type="button" ng-click="ctrl.deleteGame(currentGame.id)">Delete</button></td>
                             </tr>
                         </tbody>
                     </table>

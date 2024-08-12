@@ -4,18 +4,25 @@ import com.google.common.collect.ImmutableList;
 import com.organization.mvcproject.api.dao.GameDAO;
 import com.organization.mvcproject.api.model.Game;
 import com.organization.mvcproject.model.GameImpl;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Repository
-public class MockDAOImpl implements GameDAO {
+@Qualifier("gameStreamBasedDAO")
+public class GameStreamBasedDAO implements GameDAO {
 
     private static Long gameId = new Long(0);
     private static Long companyId = new Long(0);
     private static List<GameImpl> games = new ArrayList<GameImpl>();
+    private Logger logger = LogManager.getLogger(GameStreamBasedDAO.class);
 
     static {
         games = populateGames();
@@ -58,28 +65,33 @@ public class MockDAOImpl implements GameDAO {
     }
 
     @Override
-    public Game addOrUpdateGame(Game newGame) {
-        for(int i = 0; i < games.size(); i++) {
-            if(Objects.equals(newGame.getName(), games.get(i).getName())) {
-                games.set(i, (GameImpl) newGame);
+    public Game updateGame(Game newGame) {
+        Stream<GameImpl> gameStream = games.stream();
+
+        boolean didChange = gameStream.map((Game g) -> {
+            logger.info("Updating: looking at: " + g.getName());
+            if (g.getName().equals(newGame.getName())) {
                 return newGame;
             }
-        }
+            return g;
+        }).anyMatch( g -> g.equals(newGame) );
 
-        games.add((GameImpl) newGame);
-        return null;
+        if(didChange)
+            return newGame;
+        else
+            return null;
     }
 
     @Override
-    public Game deleteGame(Game game) {
+    public boolean deleteGame(int gameId) {
         for(int i = 0; i < games.size(); i++) {
-            if(Objects.equals(game.getName(), games.get(i).getName())) {
+            if(gameId == games.get(i).getId()) {
                 games.remove(i);
-                return game;
+                return true;
             }
         }
 
-        return null;
+        return false;
     }
 
 

@@ -10,7 +10,7 @@ public interface GameService {
 
 	Game saveGame(Game game);
 
-	Game addOrUpdateGame(Game newGame);
+	Game updateGame(Game newGame);
 
-	Game deleteGame(Game game);
+	boolean deleteGame(int game);
 }
