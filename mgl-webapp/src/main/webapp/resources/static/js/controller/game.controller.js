@@ -25,7 +25,11 @@ angular.module('MGL_Task1_app').controller('MGL_Task1_Controller',
 
             // Helper function
             self.clearGamesForm = function() {
-                document.querySelectorAll("#add-game-form input").forEach( e => e.value = null);
+                document.querySelectorAll("#add-game-form input").forEach( e => {
+                    if(e.type === "text") {
+                        e.value = null;
+                    }
+                });
             }
 
 			self.updateForm = function(event) {
